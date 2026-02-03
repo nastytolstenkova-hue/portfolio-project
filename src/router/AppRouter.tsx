@@ -7,7 +7,7 @@ import Habits from "../pages/Habits";
 import FocusTimer from "../pages/FocusTimer";
 import Statistics from "../pages/Statistics";
 
-export default function AppRouret(){
+export default function AppRouter(){
   const router = createBrowserRouter([{
     path:'/',
     element: <RootLayout/>,

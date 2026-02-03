@@ -1,9 +1,11 @@
-import LeftBar from "./layouts/LeftBar"
+
+import AppRouter from "./router/AppRouter"
 
 function App() {
   return (
     <div>
-      <LeftBar/>
+      
+      <AppRouter/>
     </div>
   )
 }
