@@ -3,13 +3,13 @@ import setting from '../assets/gear.png'
 
 export default function Timer(){
   const designButtonTime = 'font-mono text-sm rounded-full px-4 py-1 w-fit text-white bg-zinc-700 mx-4 shadow-xs shadow-blue-400/50 '
-  const activeButton = ' active:cursor-pointer active:shadow-none  hover:cursor-pointer hover:shadow-md'
+  const activeButton = ' active:cursor-pointer active:shadow-none active:scale-95 hover:cursor-pointer hover:shadow-md'
   return (
     <div className="">
       <div className="flex justify-center my-5">
-        <div className='border p-19 rounded-full'>
-          <p>time</p>
-          <p>minutes</p>
+        <div className='flex flex-col justify-center items-center border-2 border-blue-400/40 bg-zinc-900/50 h-60 w-60 rounded-full shadow-blue-400/70 shadow-[inset_0_0_25px_rgba(59,130,246,0.4)]'>
+          <p className="text-5xl font-mono font-bold text-blue-400">25:00</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-white mt-2">minutes</p>
 
         </div>
         
