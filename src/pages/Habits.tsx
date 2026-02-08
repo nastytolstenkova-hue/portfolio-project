@@ -1,6 +1,8 @@
+
 import FormAddHabit from "../components/FormAddHabit"
 
 export default function Habits(){
+
   return (
     <div>
       <div>
