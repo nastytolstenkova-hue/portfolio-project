@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormAddHabit from "../components/FormAddHabit"
 
+
+
+interface Habit {
+      id: string;
+      habitName: string;
+      habitDescription: string;
+      completedDays: boolean[];
+
+}
+
 export default function Habits(){
-  const [isModal, setIsModal] = useState<boolean>(false)
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const [habitsList, setHabitsList] = useState<Habit[]>([])
 
   const openModal = () => {
     setIsModal(true);
@@ -12,6 +23,27 @@ export default function Habits(){
     setIsModal(false);
   }
 
+  const getHabits = async() => {
+    try {
+      const response = await fetch('https://6988e1d3780e8375a6895ce5.mockapi.io/habit/habit')
+      
+      if (!response.ok) {
+        throw new Error('Ошибка сервера');
+      }
+
+      const data = await response.json();
+
+      setHabitsList(data);
+    } catch (error) {
+    console.error("Something went wrong:", error);
+    }
+    
+
+  }
+
+  useEffect(() => {
+    getHabits()
+  },[]);
   
 
   return (
