@@ -10,9 +10,35 @@ export default function FormAddHabit({closeFunction}:FormAddHab){
   const[habitName, setHabitName] = useState<string>('');
   const[description, setDescription] = useState<string>('');
 
+  const addNewHabit = async(e: React.FormEvent) => {
+    e.preventDefault();
+
+    const newHabit = {
+      habitName: habitName,
+      habitDescription: description,
+      completedDays: Array(21).fill(false)
+    }
+
+    try {
+      await fetch('https://6988e1d3780e8375a6895ce5.mockapi.io/habit/habit', {
+      method: 'POST',
+      headers: {'content-type':'application/json'},
+      body: JSON.stringify(newHabit)
+      })
+      closeFunction();
+      setHabitName('');
+      setDescription('');
+
+    } catch (error) {
+    console.error("Something went wrong:", error);
+    }
+    
+
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <form className="relative rounded-md p-2 mx-3 bg-zinc-800 border border-blue-600/30 shadow-blue-400/70 shadow-[inset_0_0_15px_rgba(59,130,246,0.4)]">
+      <form onSubmit={addNewHabit} className="relative rounded-md p-2 mx-3 bg-zinc-800 border border-blue-600/30 shadow-blue-400/70 shadow-[inset_0_0_15px_rgba(59,130,246,0.4)]">
         
         <h1 className="text-blue-400 m-2">Add new habit</h1>
         
@@ -22,7 +48,7 @@ export default function FormAddHabit({closeFunction}:FormAddHab){
           <input className={inputDesign} placeholder="habit" value={habitName} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setHabitName(e.target.value)}/>
           <input className={inputDesign} placeholder="mini-description" value={description} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setDescription(e.target.value)}/>
           <div className="flex justify-end">
-            <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 my-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95 transition-all cursor-pointer">Add</button>
+            <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 my-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95 transition-all cursor-pointer" type='submit'>Add</button>
 
           </div>
           

@@ -12,6 +12,8 @@ export default function Habits(){
     setIsModal(false);
   }
 
+  
+
   return (
     <div>
       <div>
