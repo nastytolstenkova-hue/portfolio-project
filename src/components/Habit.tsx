@@ -1,15 +1,75 @@
-export default function Habit(){
+import { useState, useEffect } from "react";
 
+interface OneHab {
+      id: string;
+      habitName: string;
+      habitDescription: string;
+      completedDays: boolean[];
+
+}
+
+export default function Habit({oneHab}:{oneHab: OneHab}){
+  const[percent, setPercent] = useState<number>(0);
+  const[arrayComplDay, setArrayComplDay] = useState<boolean[]>(oneHab.completedDays);
+
+
+  const completedFunction = async (index: number) => {
+  const updatedArray = arrayComplDay.map((day, id) => (index === id ? !day : day));
+  
+  setArrayComplDay(updatedArray);
+
+  
+  try {
+    const response = await fetch(`https://6988e1d3780e8375a6895ce5.mockapi.io/habit/habit/${oneHab.id}`, {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        ...oneHab, 
+        completedDays: updatedArray 
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update habit');
+    }
+  } catch (error) {
+    console.error("Something went wrong during refresh:", error);
+    
+  }
+};
+
+  useEffect(()=>{
+    const count = arrayComplDay.filter(Boolean).length;
+    setPercent(Math.round((count/21)*100));
+  },[arrayComplDay])
+  
   return (
-    <div>
-      <div>
-        <h2>habit name</h2>
-        <p>description</p>
+    <div className="bg-blue-400/20 m-2 p-2 rounded-md font-mono border border-blue-500 shadow-blue-400/70 shadow-[inset_0_0_25px_rgba(59,130,246,0.4)] hover:border-blue-800 hover:cursor-pointer ">
+      <div className="flex justify-between ">
+        <div>
+          <h2>{oneHab.habitName}</h2>
+          <p>{oneHab.habitDescription}</p>
+        </div>
+        <p>{percent}%</p>
+
       </div>
-      <p>percent</p>
-      <div>
-        {a.map((day:boolean, index:number)=> 
-        <button>{index + 1}</button>)}
+      
+      <div className="grid grid-cols-7">
+        {arrayComplDay.map((day:boolean, index:number)=> {
+        const completed = day === true 
+          ? 'border border-blue-700 text-white shadow-[0_0_7px_rgba(59,130,246,0.5)]' 
+          : 'bg-zinc-800/50 text-zinc-500';
+          return (
+           
+            <button  
+            key={index} 
+            onClick={()=>completedFunction(index)} 
+            className={`${completed} m-1 rounded-full hover:cursor-pointer`}
+            >
+              {index + 1} 
+              </button>
+              );
+        })}
       </div>
 
     </div>

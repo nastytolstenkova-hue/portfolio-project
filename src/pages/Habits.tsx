@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import FormAddHabit from "../components/FormAddHabit"
+import FormAddHabit from "../components/FormAddHabit";
+import Habit from "../components/Habit";
 
 
 
@@ -51,8 +52,9 @@ export default function Habits(){
       <div>
         <h1  className="font-mono border rounded-2xl p-1 px-6 w-fit mx-auto mb-8  text-cyan-300 bg-blue-500/10 border-blue-500/30 backdrop-blur-md    
       ">My habits</h1>
-        <button onClick={openModal} className="font-mono border rounded-full px-6 h-9 w-fit text-white  backdrop-blur-md mx-4 shadow-md shadow-blue-400/50 bg-blue-400 border-cyan-400 active:cursor-pointer active:shadow-none active:scale-95 hover:cursor-pointer hover:shadow-md">+ Add</button>
-        <div>
+        <button onClick={openModal} className="font-mono border rounded-full px-6 h-9 w-fit text-white  backdrop-blur-md mx-4 mb-7 shadow-md shadow-blue-400/50 bg-blue-400 border-cyan-400 active:cursor-pointer active:shadow-none active:scale-95 hover:cursor-pointer hover:shadow-md">+ Add</button>
+        </div>
+        {habitsList.length === 0 ? <div>
           <h2 className="flex justify-center text-xl uppercase tracking-[0.2em] text-white mt-10">Create new habit</h2>
           <p className="uppercase font-mono text-zinc-200 mt-10">How it works
 
@@ -62,13 +64,19 @@ export default function Habits(){
             Each day you complete the habit, you mark your progress and move one step closer to making it part of your routine.
 
             The key is consistency, not perfection.
-            Some days will be easy, some won’t — and that’s okay. What matters is showing up and continuing.
+            Some days will be easy, some won't — and that's okay. What matters is showing up and continuing.
 
             After 21 days, the habit feels more natural, requires less effort, and becomes something you do without overthinking.
 
             Small daily actions lead to real change.</p>
           </div>
-      </div>
+       : 
+      <div className="grid grid-cols-2">
+          {habitsList.map((habit)=>
+          <Habit key={habit.id} oneHab={habit}/>)}
+        </div>
+      }
+        
       {isModal && <FormAddHabit closeFunction={closeModal}/>}
       
     </div>
