@@ -16,8 +16,8 @@ export default function Habits(){
   const [isModal, setIsModal] = useState<boolean>(false);
   const [habitsList, setHabitsList] = useState<Habit[]>([])
 
-  const handleDelete = (id: string) => {
-    setHabitsList((prev) => prev.filter(habit => habit.id !== id));
+  const handleDelete = (index: string) => {
+    setHabitsList((prev) => prev.filter(habit => habit.id !== index));
   };
 
   const openModal = () => {
