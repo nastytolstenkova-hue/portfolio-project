@@ -1,19 +1,41 @@
 import { useState, useEffect } from "react";
 
-interface OneHab {
+export interface OneHab {
       id: string;
       habitName: string;
       habitDescription: string;
       completedDays: boolean[];
+      
 
 }
 
-export default function Habit({oneHab}:{oneHab: OneHab}){
+export interface OneHabProps {
+  oneHab: OneHab;
+  deleteFunction: (index: string) => OneHab[];
+}
+
+export default function Habit({oneHab, deleteFunction}:OneHabProps){
   const[percent, setPercent] = useState<number>(0);
   const[arrayComplDay, setArrayComplDay] = useState<boolean[]>(oneHab.completedDays);
 
 
-  const completedFunction = async (index: number) => {
+  const handleDeleteFunct = async (index: string) => {
+    if (!window.confirm("Are you sure you want to delete this habit?")) return;
+  
+  try {
+    const response = await fetch(`https://6988e1d3780e8375a6895ce5.mockapi.io/habit/habit/${oneHab.id}`, {
+      method: 'DELETE'   
+      })
+
+    if (response.ok) {
+      deleteFunction(index);
+    }
+  } catch (error) {
+    console.error("Delete failed:", error);
+  }
+};
+
+const completedFunction = async (index: number) => {
   const updatedArray = arrayComplDay.map((day, id) => (index === id ? !day : day));
   
   setArrayComplDay(updatedArray);
@@ -71,7 +93,7 @@ export default function Habit({oneHab}:{oneHab: OneHab}){
               );
         })}
       </div>
-
+      <div className="flex justify-end"><button className="hover:cursor-pointer active:scale-95" onClick={()=>handleDeleteFunct(oneHab.id)}>delete</button></div>
     </div>
   )
 }

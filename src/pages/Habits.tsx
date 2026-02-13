@@ -16,6 +16,10 @@ export default function Habits(){
   const [isModal, setIsModal] = useState<boolean>(false);
   const [habitsList, setHabitsList] = useState<Habit[]>([])
 
+  const handleDelete = (id: string) => {
+    setHabitsList((prev) => prev.filter(habit => habit.id !== id));
+  };
+
   const openModal = () => {
     setIsModal(true);
   }
@@ -73,7 +77,7 @@ export default function Habits(){
        : 
       <div className="grid grid-cols-2">
           {habitsList.map((habit)=>
-          <Habit key={habit.id} oneHab={habit}/>)}
+          <Habit key={habit.id} oneHab={habit} deleteFunction={handleDelete}/>)}
         </div>
       }
         
