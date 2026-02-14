@@ -11,7 +11,7 @@ export interface OneHab {
 
 export interface OneHabProps {
   oneHab: OneHab;
-  deleteFunction: (index: string) => OneHab[];
+  deleteFunction: (index: string) => void;
 }
 
 export default function Habit({oneHab, deleteFunction}:OneHabProps){

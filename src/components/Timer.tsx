@@ -2,7 +2,7 @@ import refresh from '../assets/reload.png';
 
 import { useState, useEffect } from 'react';
 
-  const designButtonTime = 'font-mono text-sm rounded-full px-4 py-1 w-fit text-white bg-zinc-700 mx-4 shadow-xs shadow-blue-400/50 '
+  const designButtonTime = 'font-mono text-sm rounded-full px-4 py-1 w-fit text-blue-800 dark:text-white bg-blue-500/40 dark:bg-zinc-700 mx-4 shadow-xs shadow-blue-400/50 '
   const activeButton = ' active:cursor-pointer active:shadow-none active:scale-95 hover:cursor-pointer hover:shadow-md'
   const startButton = `font-mono border rounded-full px-6 h-9 w-fit text-white  backdrop-blur-md mx-4 shadow-md shadow-blue-400/50 ${activeButton}`
 export default function Timer(){
@@ -55,16 +55,16 @@ export default function Timer(){
   return (
     <div className="">
       <div className="flex justify-center my-5">
-        <div className='flex flex-col justify-center items-center border-2 border-blue-400/40 bg-zinc-900/50 h-60 w-60 rounded-full shadow-blue-400/70 shadow-[inset_0_0_25px_rgba(59,130,246,0.4)]'>
-          <p className="text-5xl font-mono font-bold text-blue-400">{minutes}:{seconds}</p>
-          <p className="text-xs uppercase tracking-[0.2em] text-white mt-2">minutes</p>
+        <div className='flex flex-col justify-center items-center border-2 border-blue-400/40 dark:bg-zinc-900/50 h-60 w-60 rounded-full shadow-blue-400/70 shadow-[inset_0_0_25px_rgba(59,130,246,0.4)]'>
+          <p className="text-5xl font-mono  font-bold text-blue-400">{minutes}:{seconds}</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-blue-900 dark:text-white mt-2">minutes</p>
 
         </div>
         
       </div>
       <div className="grid grid-cols-3 gap-4 items-center w-full max-w-sm mx-auto">
         <div className="flex justify-end">
-          <button className={`rounded-xl h-9 w-9 bg-zinc-700 shadow-xs shadow-blue-400/50 ${activeButton} `} onClick={handleStopTimer}><img src={refresh} className="h-5 w-5 m-2"/></button>
+          <button className={`rounded-xl h-9 w-9 text-blue-800 dark:text-white bg-blue-500/40 dark:bg-zinc-700 shadow-xs shadow-blue-400/50 ${activeButton} `} onClick={handleStopTimer}><img src={refresh} className="h-5 w-5 m-2"/></button>
         </div>
         <div className="flex justify-center">
           <button className={isTimer ? `${startButton} bg-blue-600 border-indigo-800
@@ -72,7 +72,7 @@ export default function Timer(){
           `} onClick={handleStartTimer}>{isTimer ? 'pause' : 'start'}</button>
         </div>
         <div className="flex justify-start">
-          <button className={`rounded-xl px-2 h-9 bg-zinc-700 shadow-xs shadow-blue-400/50 ${activeButton} `} onClick={addFiveMin}>+ 5 min</button>
+          <button className={`rounded-xl px-2 h-9 text-blue-800 dark:text-white bg-blue-500/40 dark:bg-zinc-700 shadow-xs shadow-blue-400/50 ${activeButton} `} onClick={addFiveMin}>+ 5 min</button>
         
 
         </div>

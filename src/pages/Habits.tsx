@@ -4,7 +4,7 @@ import Habit from "../components/Habit";
 
 
 
-interface Habit {
+interface HabitP {
       id: string;
       habitName: string;
       habitDescription: string;
@@ -14,7 +14,7 @@ interface Habit {
 
 export default function Habits(){
   const [isModal, setIsModal] = useState<boolean>(false);
-  const [habitsList, setHabitsList] = useState<Habit[]>([])
+  const [habitsList, setHabitsList] = useState<HabitP[]>([])
 
   const handleDelete = (index: string) => {
     setHabitsList((prev) => prev.filter(habit => habit.id !== index));

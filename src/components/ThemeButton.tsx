@@ -1,31 +1,31 @@
 import { useState, useEffect } from "react"
 
 export default function ThemeButton(){
-  const [darkMode, setDarkMode] = useState(() => {
+  const [dark, setDark] = useState(() => {
     return localStorage.getItem('theme') === 'dark' || 
            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
 
   useEffect(() => {
-    if (darkMode) {
+    if (dark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
-  }, [darkMode]);
+  }, [dark]);
 
   return (
     <div className="grid grid-cols-2 font-mono text-sm">
-      <p className="text-zinc-500 dark:text-zinc-400">{!darkMode ? 'light' : 'dark'}</p>
+      <p className="text-zinc-500 dark:text-zinc-400">{!dark ? 'light' : 'dark'}</p>
       
       <label className="relative inline-flex items-center cursor-pointer">
         <input 
           type="checkbox" 
           className="sr-only peer" 
-          checked={darkMode}
-          onChange={() => setDarkMode(!darkMode)} 
+          checked={dark}
+          onChange={() => setDark(!dark)} 
         />
         
         <div className="w-11 h-6 bg-zinc-300 rounded-full peer 
