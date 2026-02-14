@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const inputDesign = " p-2 border border-blue-500 rounded-md focus:ring-2 focus:ring-blue-700 outline-none m-2 w-90 text-blue-100"
+const inputDesign = " p-2 border border-blue-500 rounded-md focus:ring-2 focus:ring-blue-700 outline-none m-2 w-90 text-pink-900 dark:text-blue-100"
 
 interface FormAddHab {
   closeFunction:() => void;
@@ -9,6 +9,7 @@ interface FormAddHab {
 export default function FormAddHabit({closeFunction}:FormAddHab){
   const[habitName, setHabitName] = useState<string>('');
   const[description, setDescription] = useState<string>('');
+  const[color, setColor] = useState<string>('')
 
   const addNewHabit = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -16,7 +17,8 @@ export default function FormAddHabit({closeFunction}:FormAddHab){
     const newHabit = {
       habitName: habitName,
       habitDescription: description,
-      completedDays: Array(21).fill(false)
+      completedDays: Array(21).fill(false),
+      habitColor: color
     }
 
     try {
@@ -28,6 +30,7 @@ export default function FormAddHabit({closeFunction}:FormAddHab){
       closeFunction();
       setHabitName('');
       setDescription('');
+      setColor('')
 
     } catch (error) {
     console.error("Something went wrong:", error);
@@ -38,7 +41,7 @@ export default function FormAddHabit({closeFunction}:FormAddHab){
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <form onSubmit={addNewHabit} className="relative rounded-md p-2 mx-3 bg-zinc-800 border border-blue-600/30 shadow-blue-400/70 shadow-[inset_0_0_15px_rgba(59,130,246,0.4)]">
+      <form onSubmit={addNewHabit} className="relative rounded-md p-2 mx-3 bg-blue-100 dark:bg-zinc-800 border border-blue-600/30 shadow-blue-400/70 shadow-[inset_0_0_15px_rgba(59,130,246,0.4)]">
         
         <h1 className="text-blue-400 m-2">Add new habit</h1>
         
@@ -47,6 +50,27 @@ export default function FormAddHabit({closeFunction}:FormAddHab){
           
           <input className={inputDesign} placeholder="habit" value={habitName} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setHabitName(e.target.value)}/>
           <input className={inputDesign} placeholder="mini-description" value={description} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setDescription(e.target.value)}/>
+
+            <input 
+            className={inputDesign}
+            placeholder="choose habit color"
+            value={color}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setColor(e.target.value)}
+              list="type" 
+              id="type-color" 
+              name="type"
+              />
+
+            <datalist id="type-color">
+                <option value="blue"/>
+                <option value="pink"/>
+                <option value="green"/>
+                <option value="yellow"/>
+                <option value="red"/>
+                <option value="grey"/>
+            </datalist>
+
+          
           <div className="flex justify-end">
             <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-8 my-3 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.4)] active:scale-95 transition-all cursor-pointer" type='submit'>Add</button>
 
