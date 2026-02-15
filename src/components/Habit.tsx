@@ -14,14 +14,24 @@ export interface OneHabProps {
   deleteFunction: (index: string) => void;
 }
 
+const colorMap: Record<string, string> = {
+  blue: "bg-blue-300 dark:bg-blue-900/40 border-blue-500",
+  pink: "bg-pink-200 dark:bg-pink-900/40 border-pink-300",
+  green: "bg-green-200/20 dark:bg-green-900/40 border-green-500",
+  yellow: "bg-yellow-300/60 dark:bg-yellow-900/40 border-yellow-400",
+  red: "bg-red-300 dark:bg-red-900/40 border-red-500",
+  grey: "bg-zinc-300 dark:bg-zinc-700 border-zinc-500",
+};
+
 
 
 export default function Habit({oneHab, deleteFunction}:OneHabProps){
   const[percent, setPercent] = useState<number>(0);
   const[arrayComplDay, setArrayComplDay] = useState<boolean[]>(oneHab.completedDays);
 
-  const userColor = oneHab.habitColor === 'blue' ? 'bg-blue-300 shadow-blue-400/70' : oneHab.habitColor === 'pink' ? 'bg-pink-300 shadow-pink-400/70' : oneHab.habitColor === 'green' ? 'bg-green-300 shadow-green-400/70' : oneHab.habitColor === 'yellow' ? 'bg-yellow-300 shadow-yellow-400/70' : oneHab.habitColor === 'red' ? 'bg-red-300 shadow-red-400/70' : oneHab.habitColor === 'bg-grey-300 shadow-grey-400/70'
 
+
+  const userColor = colorMap[oneHab.habitColor] ? colorMap[oneHab.habitColor] : colorMap['blue'] 
 
   const handleDeleteFunct = async (index: string) => {
     if (!window.confirm("Are you sure you want to delete this habit?")) return;
