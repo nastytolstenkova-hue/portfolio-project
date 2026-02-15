@@ -9,12 +9,13 @@ interface HabitP {
       habitName: string;
       habitDescription: string;
       completedDays: boolean[];
-
+      habitColor: string;
 }
 
 export default function Habits(){
   const [isModal, setIsModal] = useState<boolean>(false);
   const [habitsList, setHabitsList] = useState<HabitP[]>([])
+  const [showCompleted, setShowCompleted] = useState<boolean>(false);
 
   const handleDelete = (index: string) => {
     setHabitsList((prev) => prev.filter(habit => habit.id !== index));
@@ -57,6 +58,7 @@ export default function Habits(){
         <h1  className="font-mono border rounded-2xl p-1 px-6 w-fit mx-auto mb-8  text-cyan-300 bg-blue-500/10 border-blue-500/30 backdrop-blur-md    
       ">My habits</h1>
         <button onClick={openModal} className="font-mono border rounded-full px-6 h-9 w-fit text-white  backdrop-blur-md mx-4 mb-7 shadow-md shadow-blue-400/50 bg-blue-400 border-cyan-400 active:cursor-pointer active:shadow-none active:scale-95 hover:cursor-pointer hover:shadow-md">+ Add</button>
+        
         </div>
         {habitsList.length === 0 ? <div>
           <h2 className="flex justify-center text-xl uppercase tracking-[0.2em] text-white mt-10">Create new habit</h2>
@@ -75,9 +77,23 @@ export default function Habits(){
             Small daily actions lead to real change.</p>
           </div>
        : 
-      <div className="grid grid-cols-2">
-          {habitsList.map((habit)=>
-          <Habit key={habit.id} oneHab={habit} deleteFunction={handleDelete}/>)}
+       <div>
+        <div className="grid grid-cols-2">
+            {habitsList.map((habit)=>
+            habit.completedDays.filter(Boolean).length !== 21 && <Habit key={habit.id} oneHab={habit} deleteFunction={handleDelete}/>)}
+            
+          </div>
+          <div>
+            <button onClick={()=>setShowCompleted(!showCompleted)} className="underline mx-4">Completed habits</button>
+            {showCompleted && 
+            <div className="grid grid-cols-2 opacity-60 grayscale-[0.3]">
+              {habitsList.map((habit)=>
+              habit.completedDays.filter(Boolean).length === 21 && <Habit key={habit.id} oneHab={habit} deleteFunction={handleDelete}/>)}
+            
+          </div>}
+            
+          </div>
+          
         </div>
       }
         

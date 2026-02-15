@@ -50,9 +50,11 @@ export default function Habit({oneHab, deleteFunction}:OneHabProps){
 };
 
 const completedFunction = async (index: number) => {
+  if (percent !== 100){
   const updatedArray = arrayComplDay.map((day, id) => (index === id ? !day : day));
   
   setArrayComplDay(updatedArray);
+  
 
   
   try {
@@ -71,7 +73,7 @@ const completedFunction = async (index: number) => {
   } catch (error) {
     console.error("Something went wrong during refresh:", error);
     
-  }
+  }}
 };
 
   useEffect(()=>{
@@ -80,34 +82,37 @@ const completedFunction = async (index: number) => {
   },[arrayComplDay])
   
   return (
-    <div className={`${userColor} m-2 p-2 rounded-md font-mono border border-blue-500  shadow-[inset_0_0_25px_rgba(59,130,246,0.4)] hover:border-blue-800 hover:cursor-pointer `}>
-      <div className="flex justify-between ">
-        <div>
-          <h2>{oneHab.habitName}</h2>
-          <p>{oneHab.habitDescription}</p>
-        </div>
-        <p>{percent}%</p>
+    
+        <div className={`${userColor} m-2 p-2 rounded-md font-mono border border-blue-500  shadow-[inset_0_0_25px_rgba(59,130,246,0.4)] hover:border-blue-800 hover:cursor-pointer `}
+        >
+          
+          <div className="flex justify-between ">
+            <div>
+              <h2>{oneHab.habitName}</h2>
+              <p>{oneHab.habitDescription}</p>
+            </div>
+            <p>{percent}%</p>
 
-      </div>
-      
-      <div className="grid grid-cols-7">
-        {arrayComplDay.map((day:boolean, index:number)=> {
-        const completed = day === true 
-          ? 'border border-blue-700 text-blue-700 bg-blue-300 dark:bg-blue-400/30 dark:text-white shadow-[0_0_7px_rgba(59,130,246,0.5)]' 
-          : 'dark:bg-zinc-800/50 text-blue-400 dark:text-zinc-400';
-          return (
-           
-            <button  
-            key={index} 
-            onClick={()=>completedFunction(index)} 
-            className={`${completed} m-1 rounded-full hover:cursor-pointer`}
-            >
-              {index + 1} 
-              </button>
-              );
-        })}
-      </div>
-      <div className="flex justify-end"><button className="hover:cursor-pointer active:scale-95" onClick={()=>handleDeleteFunct(oneHab.id)}>delete</button></div>
-    </div>
+          </div>
+          
+          <div className="grid grid-cols-7">
+            {arrayComplDay.map((day:boolean, index:number)=> {
+            const completed = day === true 
+              ? 'border border-blue-700 text-blue-700 bg-blue-300 dark:bg-blue-400/30 dark:text-white shadow-[0_0_7px_rgba(59,130,246,0.5)]' 
+              : 'dark:bg-zinc-800/50 text-blue-400 dark:text-zinc-400';
+              return (
+              
+                <button  
+                key={index} 
+                onClick={()=>completedFunction(index)} 
+                className={`${completed} m-1 rounded-full hover:cursor-pointer`}
+                >
+                  {index + 1} 
+                  </button>
+                  );
+            })}
+          </div>
+          <div className="flex justify-end"><button className="hover:cursor-pointer active:scale-95" onClick={()=>handleDeleteFunct(oneHab.id)}>delete</button></div>
+        </div> 
   )
 }
