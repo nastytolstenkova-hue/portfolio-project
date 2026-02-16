@@ -28,6 +28,7 @@ const colorMap: Record<string, string> = {
 
 export default function Habit({oneHab, deleteFunction}:OneHabProps){
   const[percent, setPercent] = useState<number>(0);
+
   const[arrayComplDay, setArrayComplDay] = useState<boolean[]>(oneHab.completedDays);
 
 

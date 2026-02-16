@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import FormAddHabit from "../components/FormAddHabit";
 import Habit from "../components/Habit";
+import { HabitsContext } from "../store/HabitsContext";
 
 
-
-interface HabitP {
-      id: string;
-      habitName: string;
-      habitDescription: string;
-      completedDays: boolean[];
-      habitColor: string;
-}
 
 export default function Habits(){
   const [isModal, setIsModal] = useState<boolean>(false);
-  const [habitsList, setHabitsList] = useState<HabitP[]>([])
   const [showCompleted, setShowCompleted] = useState<boolean>(false);
+
+  const context = useContext(HabitsContext)
+
+  if (!context) {
+     throw new Error("Habits must be used within a HabitContextProvider");
+  }
+
+  const { habitsList, setHabitsList, getHabits } = context;
 
   const handleDelete = (index: string) => {
     setHabitsList((prev) => prev.filter(habit => habit.id !== index));
@@ -29,23 +29,7 @@ export default function Habits(){
     setIsModal(false);
   }
 
-  const getHabits = async() => {
-    try {
-      const response = await fetch('https://6988e1d3780e8375a6895ce5.mockapi.io/habit/habit')
-      
-      if (!response.ok) {
-        throw new Error('Ошибка сервера');
-      }
-
-      const data = await response.json();
-
-      setHabitsList(data);
-    } catch (error) {
-    console.error("Something went wrong:", error);
-    }
-    
-
-  }
+  
 
   useEffect(() => {
     getHabits()
